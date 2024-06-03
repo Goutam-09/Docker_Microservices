@@ -1,0 +1,26 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: ApiGateway
+  cloud:
+    gateway:
+      routes:
+        - id: SERVICE-A
+          uri: lb://SERVICE-A
+          predicates:
+            - Path=/service-A/**
+            
+        - id: SERVICE-B
+          uri: lb://SERVICE-B
+          predicates:
+            - Path=/service-B/**
+            
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8081}/eureka
+  instance:
+    prefer-ip-address: true
